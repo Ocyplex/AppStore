@@ -13,7 +13,9 @@ public class Main {
         }
 
         Worker worker = new Worker("Edzio","Dawny","programista",5000.0,3);
-
+        Worker worker1 = new Worker("Kasia","Mala","programista",5000.0,3);
+        Worker worker2 = new Worker("Ferdek","Mocny","tester",1500.0,0);
+        Worker worker3 = new Worker("Julia","Taka","sprzedawca",3000.0,1);
 
         Project project = new Project("WSBJAVA",2);
         project.technologie[0]="front-end";
@@ -22,5 +24,14 @@ public class Main {
         worker.wypiszSkille();
         project.wypiszTechnologie();
         worker.przydzielProject(project);
+
+
+
+        Menu menu= new Menu();
+        menu.firma.listaWolnychPracownikow.add(worker);
+        menu.firma.listaWolnychPracownikow.add(worker1);
+        menu.firma.listaWolnychPracownikow.add(worker2);
+        menu.firma.listaWolnychPracownikow.add(worker3);
+        menu.glownyMenu();
     }
 }

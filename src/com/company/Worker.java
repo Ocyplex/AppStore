@@ -78,7 +78,19 @@ public class Worker {
         System.out.println(name+" "+lastName +" skille:");
         for(int i = 0; i< Arrays.stream(workerSkills).count() ; i++)
         {
-            System.out.println(workerSkills[i]);
+            System.out.print(workerSkills[i] + " ");
         }
+    }
+
+
+    public void wypiszInformacjeOPracowniku(){
+        System.out.println("Imie: "+ name + "Nazwisko: " + lastName);
+        System.out.println("Stanowisko: "+stanowisko+" Wyplata: "+salary);
+        try {
+            System.out.println("przydzielony projekt: " + myProject.name);
+        }catch (Exception e){
+            System.out.println("niema przydzielonego projektu");
+        }
+        wypiszSkille();
     }
 }
