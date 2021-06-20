@@ -6,19 +6,20 @@ import java.util.List;
 
 public class Firma {
     public Integer cash;
-    public Project[] pulaDostepnychProjektow;
 
 
 
-    List<Worker> listaPracownikow = new ArrayList<>();
+
+    List<Worker> listaPracownikow = new ArrayList<>(10);
     List<Worker> listaWolnychPracownikow = new ArrayList<>();
+    List<Project> listaProjektow = new ArrayList<>();
 
 
-    public void wypiszProjecty(){
-        for(int i = 0; i< Arrays.stream(pulaDostepnychProjektow).count();i++){
-            System.out.println(pulaDostepnychProjektow[i]);
-        }
-    }
+   // public void wypiszProjecty(){
+   //     for(int i = 0; i< Arrays.stream(pulaDostepnychProjektow).count();i++){
+   //         System.out.println(pulaDostepnychProjektow[i]);
+   //     }
+   // }
 
     public void zatrudniPracownika(Worker worker){
         listaPracownikow.add(worker);

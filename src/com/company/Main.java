@@ -17,9 +17,9 @@ public class Main {
         Worker worker2 = new Worker("Ferdek","Mocny","tester",1500.0,0);
         Worker worker3 = new Worker("Julia","Taka","sprzedawca",3000.0,1);
 
-        Project project = new Project("WSBJAVA",2);
+        Project project = new Project("WSBJAVA",1,5,3000.0,500.0);
         project.technologie[0]="front-end";
-        project.technologie[1]="mobile";
+
 
         worker.wypiszSkille();
         project.wypiszTechnologie();
@@ -32,6 +32,7 @@ public class Main {
         menu.firma.listaWolnychPracownikow.add(worker1);
         menu.firma.listaWolnychPracownikow.add(worker2);
         menu.firma.listaWolnychPracownikow.add(worker3);
+        menu.firma.listaProjektow.add(project);
         menu.glownyMenu();
     }
 }

@@ -75,17 +75,22 @@ public class Worker {
     }
 
     public void wypiszSkille(){
-        System.out.println(name+" "+lastName +" skille:");
+        System.out.println("Skille: ");
         for(int i = 0; i< Arrays.stream(workerSkills).count() ; i++)
         {
-            System.out.print(workerSkills[i] + " ");
+            if(workerSkills[i]=="Empty") {
+
+            }else{
+                System.out.print(workerSkills[i] + " ");
+            }
         }
+        System.out.println();
     }
 
 
     public void wypiszInformacjeOPracowniku(){
-        System.out.println("Imie: "+ name + "Nazwisko: " + lastName);
-        System.out.println("Stanowisko: "+stanowisko+" Wyplata: "+salary);
+        System.out.println("Imie: "+ name + " Nazwisko: " + lastName);
+        System.out.println("Stanowisko: "+stanowisko+" Stawka: "+salary);
         try {
             System.out.println("przydzielony projekt: " + myProject.name);
         }catch (Exception e){

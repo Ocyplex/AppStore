@@ -15,9 +15,21 @@ public class Project {
         public Integer terminPlatnosci;
         public Boolean isFinished = false;
 
-        public Project(String name, Integer technologieInt){
+        public Project(String name, Integer technologieInt,Integer czasRealizacji,Double cena, Double kara){
                 this.name = name;
                 this.technologieInt = technologieInt;
+                this.czasRealizacji = czasRealizacji;
+                this.cena = cena;
+                this.kara = kara;
+                switch (technologieInt){
+                        case(1):
+                                poziomZlozonosci="latwy";
+                        case(2):
+                                poziomZlozonosci="sredni";
+                        case(3):
+                                poziomZlozonosci="zlozony";
+
+                }
 
         }
 
