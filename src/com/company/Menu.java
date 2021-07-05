@@ -2,16 +2,19 @@ package com.company;
 
 import java.util.Arrays;
 import java.util.Scanner;
+import java.time.LocalDate;
 
 public class Menu {
 
     Firma firma = new Firma();
     Scanner scan = new Scanner(System.in);
-    int day = 1;
+    LocalDate czas = LocalDate.of(2021,1,1);
+
 
     public String[] menuGlowny = {"0.Firma","1.Pracowniki","2.Projekty","3.Czynosci"};
     public String[] workerMenuArray = {"0.Pokaz liste pracownikow","1.Szukaj nowych pracownikow","2.Zatrudni pracownika","3.Zwolni pracownika","4.Cofni"};
     public String[] projectMenuArray = {"0.Sprawdz status projektow","1.Szukaj nowych projektow","2.Przydziel projekt","3.Cofni"};
+    public String[] doMenuArray = {"0.Pracuj nad projektem","1.Cofnij"};
     public void glownyMenu()
     {
     for(int i = 0; i< Arrays.stream(menuGlowny).count(); i++)
@@ -67,6 +70,7 @@ public class Menu {
                     firma.listaPracownikow.add(firma.listaWolnychPracownikow.get(d));
                     System.out.println("Zatrudniles: " +firma.listaWolnychPracownikow.get(d).name);
                     firma.listaWolnychPracownikow.remove(d);
+                    endTurn();
                 }
                 glownyMenu();
             case (3):
@@ -91,7 +95,11 @@ public class Menu {
         switch (s)
         {
             case(0):
+                firma.wypiszProjecty();
+                break;
             case(1):
+                firma.wypiszWolneProjecty();
+                break;
             case(2):
                 System.out.print("Jaki pracownik:");
                 int d = scan.nextInt();
@@ -99,7 +107,7 @@ public class Menu {
                 {
                     System.out.println("Niema takiego pracownika");
                     projectMenu();
-                    return;
+                    break;
 
                 }
                 System.out.println("Jaki projekt:");
@@ -108,16 +116,39 @@ public class Menu {
                 {
                     System.out.println("Niema takiego projektu");
                     projectMenu();
-                    return;
+                    break;
                 }
                 firma.listaPracownikow.get(d).przydzielProject(firma.listaProjektow.get(f));
             case(3):
                 glownyMenu();
+                break;
         }
     }
     public void doMenu()
     {
+        for(int i = 0; i< Arrays.stream(doMenuArray).count(); i++)
+        {
+            System.out.println(doMenuArray[i]);
+        }
+        int s = scan.nextInt();
+        switch (s)
+        {
+            case (0):
+                System.out.println("Nad jakim projektem chcesz pracowac?");
+                        int d = scan.nextInt();
+                firma.listaProjektow.get(d).czasRealizacji =-1;
+            case(1):
+                glownyMenu();
+        }
+    }
 
+    public void endTurn()//Konczenie tury
+    {
+        czas.plusDays(1);//dodac jeden dzien
+        for(Worker worker: firma.listaPracownikow)
+        {
+            worker.pracuj();
+        }
     }
 
 }

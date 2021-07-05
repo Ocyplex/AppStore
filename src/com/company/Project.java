@@ -14,6 +14,7 @@ public class Project {
         public Integer terminOddania;
         public Integer terminPlatnosci;
         public Boolean isFinished = false;
+        public Integer dniPracy;
 
         public Project(String name, Integer technologieInt,Integer czasRealizacji,Double cena, Double kara){
                 this.name = name;
@@ -41,28 +42,8 @@ public class Project {
                         System.out.println(technologie[i]);
                 }
         }
-
-
-
     }
 
 
 
-
-
-
-//nazwa projektu
-//ilość roboczodni potrzebnych do realizacji w podziale na poszczególne technologie
-//front-end
-//backend
-//baza danych
-//mobile
-//wordpress
-//prestashop
-//klient
-//termin oddania
-//wysokość kary za przekroczenie terminu
-//cena jaką klient może zapłacić za realizację
-//termin płatności (ile dni minie od oddania projektu do otrzymania zapłaty)
-//poziom złożoności (łatwy/średni/złożony)
 
