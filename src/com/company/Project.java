@@ -1,5 +1,7 @@
 package com.company;
 
+import java.time.LocalDate;
+
 public class Project {
 
 
@@ -11,7 +13,7 @@ public class Project {
         public Integer technologieInt = 0;
         public Double cena;
         public Double kara;
-        public Integer terminOddania;
+        public LocalDate terminOddania;
         public Integer terminPlatnosci;
         public Boolean isFinished = false;
         public Integer dniPracy;
@@ -40,6 +42,18 @@ public class Project {
                 {
 
                         System.out.println(technologie[i]);
+                }
+        }
+
+        public void  wypiszTerminOddania(){
+                System.out.println("Termin oddania to " + terminOddania.getDayOfMonth() + " " + terminOddania.getMonth() + " " + terminOddania.getYear());
+        }
+
+        public void checkIfFinished()
+        {
+                if(czasRealizacji <= 0){
+                        isFinished = true;
+                        System.out.println("Projekt gotowy do oddania!");
                 }
         }
     }

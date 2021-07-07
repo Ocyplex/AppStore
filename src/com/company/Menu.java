@@ -14,6 +14,7 @@ public class Menu {
     public String[] menuGlowny = {"0.Firma","1.Pracowniki","2.Projekty","3.Czynosci"};
     public String[] workerMenuArray = {"0.Pokaz liste pracownikow","1.Szukaj nowych pracownikow","2.Zatrudni pracownika","3.Zwolni pracownika","4.Cofni"};
     public String[] projectMenuArray = {"0.Sprawdz status projektow","1.Szukaj nowych projektow","2.Przydziel projekt","3.Cofni"};
+    public String[] wybierzProjectArray = {"0.Wybierz projekt","Cofnij"};
     public String[] doMenuArray = {"0.Pracuj nad projektem","1.Cofnij"};
     public void glownyMenu()
     {
@@ -32,12 +33,15 @@ public class Menu {
                 projectMenu();
             case(3):
                 doMenu();
+            default:
+                glownyMenu();
         }
     }
 
     public void firmaMenu()
     {
-
+        firma.wypiszInformacje(czas);
+        glownyMenu();
     }
     public void workerMenu()
     {
@@ -65,23 +69,17 @@ public class Menu {
             case(2):
                 System.out.print("Podaj nr pracownika ktorego chcesz zatrudnic: ");
                 int d = scan.nextInt();
-                if(firma.listaWolnychPracownikow.get(d)!=null)
-                {
-                    firma.listaPracownikow.add(firma.listaWolnychPracownikow.get(d));
-                    System.out.println("Zatrudniles: " +firma.listaWolnychPracownikow.get(d).name);
-                    firma.listaWolnychPracownikow.remove(d);
+                if(firma.zatrudniPracownika(d)) {
                     endTurn();
                 }
                 glownyMenu();
             case (3):
                 System.out.print("Podaj nr pracownika ktorego chcesz zwolnic: ");
                 int c = scan.nextInt();
-                firma.listaPracownikow.remove(c);
+                firma.zwolnijPracownika(c);
                 glownyMenu();
-
             case(4):
                 glownyMenu();
-
         }
 
     }
@@ -92,14 +90,22 @@ public class Menu {
             System.out.println(projectMenuArray[i]);
         }
         int s = scan.nextInt();
-        switch (s)
-        {
-            case(0):
+        switch (s) {
+            case (0):
                 firma.wypiszProjecty();
-                break;
-            case(1):
+                projectMenu();
+            case (1):
                 firma.wypiszWolneProjecty();
-                break;
+                int c = scan.nextInt();
+                switch (c) {
+                    case (0):
+                        int d = scan.nextInt();
+                        System.out.println("Wybierz projekt");
+                        firma.przydzielProject(d, czas);
+                        glownyMenu();
+                    case (1):
+                        projectMenu();
+                }
             case(2):
                 System.out.print("Jaki pracownik:");
                 int d = scan.nextInt();
@@ -107,8 +113,6 @@ public class Menu {
                 {
                     System.out.println("Niema takiego pracownika");
                     projectMenu();
-                    break;
-
                 }
                 System.out.println("Jaki projekt:");
                 int f = scan.nextInt();
@@ -116,12 +120,10 @@ public class Menu {
                 {
                     System.out.println("Niema takiego projektu");
                     projectMenu();
-                    break;
                 }
                 firma.listaPracownikow.get(d).przydzielProject(firma.listaProjektow.get(f));
             case(3):
                 glownyMenu();
-                break;
         }
     }
     public void doMenu()
@@ -136,7 +138,9 @@ public class Menu {
             case (0):
                 System.out.println("Nad jakim projektem chcesz pracowac?");
                         int d = scan.nextInt();
-                firma.listaProjektow.get(d).czasRealizacji =-1;
+                        if(firma.jaPracuje(d)) {
+                            endTurn();
+                        }
             case(1):
                 glownyMenu();
         }
@@ -144,11 +148,13 @@ public class Menu {
 
     public void endTurn()//Konczenie tury
     {
-        czas.plusDays(1);//dodac jeden dzien
+        System.out.println("Zakonczyles dzien!");
+        czas = czas.plusDays(1);//dodac jeden dzien
         for(Worker worker: firma.listaPracownikow)
         {
             worker.pracuj();
         }
+        System.out.println(czas.getDayOfMonth() + " " + czas.getMonth() + " " + czas.getYear());
     }
 
 }

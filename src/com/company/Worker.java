@@ -102,8 +102,10 @@ public class Worker {
     public void pracuj(){
         if (Worker.this.stanowisko == "programista" && Worker.this.myProject != null)
         {
-            Worker.this.myProject.czasRealizacji =- 1;
-            System.out.println(name + " pracuje, do realizacji zostalo " + myProject.czasRealizacji + "dni1");
+            Worker.this.myProject.czasRealizacji -= 1;
+            System.out.println(name + " pracuje, do realizacji zostalo " + myProject.czasRealizacji + " dni");
+            Worker.this.myProject.checkIfFinished();
         }
+
     }
 }
