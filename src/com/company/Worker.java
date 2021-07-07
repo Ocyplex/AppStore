@@ -13,6 +13,7 @@ public class Worker {
     int maxSkill = 6; // maxymalna randomowa liczba
     public Boolean spelniaTechnologie;
     public Project myProject;
+    public Integer sprzedawcaTime = 5;
 
     Worker(String name,String lastName,String stanowisko, Double salary, Integer skillNumber ){
         this.name = name;
@@ -58,19 +59,20 @@ public class Worker {
 
     public void przydzielProject(Project project)
     {
-        int pasuje = 0;
-        for(int i = 0;i <= project.technologieInt;i++){
-            for (int j = 0; j < Arrays.stream(workerSkills).count();j++)
-            if(project.technologie[i]==workerSkills[j]){
-                pasuje++;
+        if(stanowisko == "programista") {
+            int pasuje = 0;
+            for (int i = 0; i <= project.technologieInt; i++) {
+                for (int j = 0; j < Arrays.stream(workerSkills).count(); j++)
+                    if (project.technologie[i] == workerSkills[j]) {
+                        pasuje++;
+                    }
             }
-        }
-        if (pasuje == project.technologieInt)
-        {
-            myProject = project;
-            System.out.println("Pracownik " + name + "zostal przydzielony project "+ project.name);
-        }else{
-            System.out.println("Pracownik " + name + " niema odpowiedniego skilla na "+ project.name);
+            if (pasuje == project.technologieInt) {
+                myProject = project;
+                System.out.println("Pracownik " + name + "zostal przydzielony project " + project.name);
+            } else {
+                System.out.println("Pracownik " + name + " niema odpowiedniego skilla na " + project.name);
+            }
         }
     }
 
@@ -99,7 +101,7 @@ public class Worker {
         wypiszSkille();
     }
 
-    public void pracuj(){
+    public void pracuj(Firma firma, DataBase dataBase){
         if (Worker.this.stanowisko == "programista" && Worker.this.myProject != null)
         {
             Worker.this.myProject.czasRealizacji -= 1;
@@ -107,5 +109,32 @@ public class Worker {
             Worker.this.myProject.checkIfFinished();
         }
 
+        if(stanowisko == "sprzedawca")//Dodawanie projektow co 5 dni
+        {
+            sprzedawcaTime--;
+            if(sprzedawcaTime == 1)
+            {
+                int rn = 0;
+                Random random = new Random();
+                rn = random.nextInt(dataBase.allProjectList.size()+ 0);
+                firma.pulaDostepnychProjektow.add(dataBase.allProjectList.get(rn));//dodanie do pul firmy
+                dataBase.allProjectList.remove(rn);//Usuniecie z glownej listy
+                sprzedawcaTime = 5;//nowy timer
+            }
+        }
+
+        if(stanowisko == "tester")
+        {
+            for(int i=0;i<firma.listaProjektow.size();i++) // tester sprawdza gotowy projekty maximalnie 3
+            {
+                for(int j=0;j<3;j++){
+                if(firma.listaProjektow.get(i).isFinished)
+                {
+                    firma.listaProjektow.get(i).wasTested = true;
+                    j++;
+                }
+                }
+            }
+        }
     }
 }

@@ -8,6 +8,8 @@ public class Firma {
 
     public Double cash = 10000.0;
     public Boolean ZUS = false;
+    public Integer zusTime = 2;
+    public Integer jaSzukanieTime = 5;
     List<Worker> listaPracownikow = new ArrayList<>(10);
     List<Worker> listaWolnychPracownikow = new ArrayList<>();
     List<Project> listaProjektow = new ArrayList<>();
@@ -78,6 +80,22 @@ public class Firma {
             System.out.println("ZUS na " + l.getMonth() +" zaplacony!");
         }else{
             System.out.println("ZUS na " + l.getMonth() +" jeszcze nie jest oplacony!");
+        }
+    }
+
+    public void checkZUS(){
+        if(zusTime <= 0)
+        {
+            ZUS = true;
+        }
+    }
+
+    public void jaSzukamProjektow(DataBase db){ //Co 5 dni dodanie projektu z DataBase Klasy
+        jaSzukanieTime--;
+        if(jaSzukanieTime ==0){
+            pulaDostepnychProjektow.add(db.allProjectList.get(0));
+            System.out.println("Znalazles projekt!");
+            jaSzukanieTime = 5;
         }
     }
 

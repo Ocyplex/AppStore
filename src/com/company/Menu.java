@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.time.LocalDate;
 
+
 public class Menu {
+
 
     Firma firma = new Firma();
     Scanner scan = new Scanner(System.in);
@@ -15,7 +17,15 @@ public class Menu {
     public String[] workerMenuArray = {"0.Pokaz liste pracownikow","1.Szukaj nowych pracownikow","2.Zatrudni pracownika","3.Zwolni pracownika","4.Cofni"};
     public String[] projectMenuArray = {"0.Sprawdz status projektow","1.Szukaj nowych projektow","2.Przydziel projekt","3.Cofni"};
     public String[] wybierzProjectArray = {"0.Wybierz projekt","Cofnij"};
-    public String[] doMenuArray = {"0.Pracuj nad projektem","1.Cofnij"};
+    public String[] doMenuArray = {"0.Pracuj nad projektem","1.Sprawy urzedowe","2.Szukaj projektow","3.Cofnij"};
+    public DataBase db;
+
+
+
+    Menu(DataBase db){
+        this.db = db;
+    }
+
     public void glownyMenu()
     {
     for(int i = 0; i< Arrays.stream(menuGlowny).count(); i++)
@@ -142,7 +152,23 @@ public class Menu {
                             endTurn();
                         }
             case(1):
+                if(!firma.ZUS){
+                    if(firma.zusTime>0){
+                        System.out.println("Robiles sprawy urzedowe");
+                        firma.zusTime--;
+                        firma.checkZUS();
+                        endTurn();
+                    }
+                }else {
+                    System.out.println("ZUS juz zalatwiony na " + czas.getMonth());
+                    glownyMenu();
+                }
+            case(2):
+                firma.jaSzukamProjektow(db);
+                endTurn();
+            case(3):
                 glownyMenu();
+
         }
     }
 
@@ -152,9 +178,10 @@ public class Menu {
         czas = czas.plusDays(1);//dodac jeden dzien
         for(Worker worker: firma.listaPracownikow)
         {
-            worker.pracuj();
+            worker.pracuj(firma,db);
         }
         System.out.println(czas.getDayOfMonth() + " " + czas.getMonth() + " " + czas.getYear());
+        glownyMenu();
     }
 
 }

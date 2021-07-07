@@ -17,6 +17,7 @@ public class Project {
         public Integer terminPlatnosci;
         public Boolean isFinished = false;
         public Integer dniPracy;
+        public Boolean wasTested;
 
         public Project(String name, Integer technologieInt,Integer czasRealizacji,Double cena, Double kara){
                 this.name = name;
