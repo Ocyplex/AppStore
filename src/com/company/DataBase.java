@@ -8,6 +8,9 @@ public class DataBase {
     List<Worker> allWorkerList = new ArrayList<>();
     List<Project> allProjectList = new ArrayList<>();
 
+    Client client = new Client("Ramazon","skrwl");
+    Client client1 = new Client("Wyszsza Szkola Bankowa","wyluzowany");
+    Client client2 = new Client("Microhard","wymagajacy");
 
     Worker worker = new Worker("Edzio","Dawny","programista",5500.0,3);
     Worker worker1 = new Worker("Kasia","Mala","programista",7500.0,3);
@@ -17,12 +20,13 @@ public class DataBase {
     Worker worker5 = new Worker("Kevin","Imprezujacy", "prgramista",7500.0,3);
 
 
-    Project project = new Project("WSBJAVA",1,5,3000.0,500.0);
-    Project project1 = new Project("TowerDefence",1,5,4000.0,500.0);
-    Project project2 = new Project("InstaSnap",1,3,2000.0,2000.0);
-    Project project3 = new Project("Finder", 2,10,7000.0,300.0);
-    Project project4 = new Project("GogleTraps",0,20,50.000,20000.0);
-    Project project5 = new Project("Buber",2,10,10.000,2.000);
+    Project project = new Project("WSBJAVA",1,5,3000.0,500.0,client1);
+    Project project1 = new Project("TowerDefence",1,5,4000.0,500.0,client1);
+    Project project2 = new Project("InstaSnap",1,3,2000.0,2000.0,client1);
+    Project project3 = new Project("Finder", 2,10,7000.0,300.0,client1);
+    Project project4 = new Project("GogleTraps",0,20,50.000,20000.0,client1);
+    Project project5 = new Project("Buber",2,10,10.000,2.000,client1);
+
 
     public void addLists(){
         allWorkerList.add(worker);

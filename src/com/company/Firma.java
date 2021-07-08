@@ -3,6 +3,7 @@ package com.company;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Firma {
 
@@ -10,10 +11,13 @@ public class Firma {
     public Boolean ZUS = false;
     public Integer zusTime = 2;
     public Integer jaSzukanieTime = 5;
+    Scanner scan = new Scanner(System.in);
     List<Worker> listaPracownikow = new ArrayList<>(10);
     List<Worker> listaWolnychPracownikow = new ArrayList<>();
     List<Project> listaProjektow = new ArrayList<>();
     List<Project> pulaDostepnychProjektow = new ArrayList();
+    List<Project> listaGotowychProjektow = new ArrayList<>();
+    List<Project> listaOtwartychWplat = new ArrayList<>();
 
 
     public void wypiszProjecty(){
@@ -57,16 +61,21 @@ public class Firma {
         pulaDostepnychProjektow.remove(a);
     }
 
-    public boolean jaPracuje(Integer a)
+    public void jaPracuje(Menu menu)
     {
-        if(listaProjektow.get(a) == null)
+        System.out.println("Nad jakim projektem chcesz pracowac?");
+        for(int i = 0;i<listaProjektow.size();i++){
+            System.out.print(i + "." +listaProjektow.get(i).name + " ### ");
+        }
+        int d = scan.nextInt();
+        if(listaProjektow.get(d) == null)
         {
             System.out.println("Niema takiego projektu");
-            return false;
+            menu.glownyMenu();
         }else {
-            listaProjektow.get(a).czasRealizacji -= 1;
-            listaProjektow.get(a).checkIfFinished();
-            return true;
+            listaProjektow.get(d).czasRealizacji -= 1;
+            listaProjektow.get(d).checkIfFinished();
+            menu.endTurn();
         }
     }
 
@@ -99,4 +108,35 @@ public class Firma {
         }
     }
 
+    public void oddajGotowyProjekt(LocalDate ld,Menu menu)
+    {
+        if (listaGotowychProjektow.size() > 0)
+        {
+            System.out.println("Jaki projekt chcesz oddac?");
+            for (Project p: listaGotowychProjektow) {
+                System.out.println(p.name);
+            }
+            int s = scan.nextInt();
+            listaGotowychProjektow.get(s).projectOddanie(ld,this);
+            menu.endTurn();
+        }else {
+            System.out.println("Niemasz gotowych projektow!");
+            menu.glownyMenu();
+        }
+    }
+
+    public void szukajGotowychProjektow()
+    {
+        for(int i = 0;i<listaProjektow.size();i++)
+        {
+            if(listaProjektow.get(i).isFinished)//sprawdzenie czy projekt gotowy
+            {
+                listaGotowychProjektow.add(listaProjektow.get(i));//wpisanie na gotowa liste
+                listaProjektow.remove(i);//usuniecie z starej listy
+            }
+        }
+        if(listaGotowychProjektow.size()>0) {
+            System.out.println("Masz " + listaGotowychProjektow.size() +" projekt do oddania!");
+        }
+    }
 }

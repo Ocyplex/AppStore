@@ -17,7 +17,7 @@ public class Menu {
     public String[] workerMenuArray = {"0.Pokaz liste pracownikow","1.Szukaj nowych pracownikow","2.Zatrudni pracownika","3.Zwolni pracownika","4.Cofni"};
     public String[] projectMenuArray = {"0.Sprawdz status projektow","1.Szukaj nowych projektow","2.Przydziel projekt","3.Cofni"};
     public String[] wybierzProjectArray = {"0.Wybierz projekt","Cofnij"};
-    public String[] doMenuArray = {"0.Pracuj nad projektem","1.Sprawy urzedowe","2.Szukaj projektow","3.Cofnij"};
+    public String[] doMenuArray = {"0.Pracuj nad projektem","1.Sprawy urzedowe","2.Szukaj projektow","3.Oddaj gotowy projekt","4.Cofnij"};
     public DataBase db;
 
 
@@ -109,8 +109,8 @@ public class Menu {
                 int c = scan.nextInt();
                 switch (c) {
                     case (0):
-                        int d = scan.nextInt();
                         System.out.println("Wybierz projekt");
+                        int d = scan.nextInt();
                         firma.przydzielProject(d, czas);
                         glownyMenu();
                     case (1):
@@ -146,11 +146,7 @@ public class Menu {
         switch (s)
         {
             case (0):
-                System.out.println("Nad jakim projektem chcesz pracowac?");
-                        int d = scan.nextInt();
-                        if(firma.jaPracuje(d)) {
-                            endTurn();
-                        }
+                    firma.jaPracuje(this);
             case(1):
                 if(!firma.ZUS){
                     if(firma.zusTime>0){
@@ -167,6 +163,8 @@ public class Menu {
                 firma.jaSzukamProjektow(db);
                 endTurn();
             case(3):
+                firma.oddajGotowyProjekt(czas,this);
+            case(4):
                 glownyMenu();
 
         }
@@ -180,6 +178,7 @@ public class Menu {
         {
             worker.pracuj(firma,db);
         }
+        firma.szukajGotowychProjektow();
         System.out.println(czas.getDayOfMonth() + " " + czas.getMonth() + " " + czas.getYear());
         glownyMenu();
     }
