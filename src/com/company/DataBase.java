@@ -29,6 +29,7 @@ public class DataBase {
 
 
     public void addLists(){
+        System.out.print("Tutaj");
         allWorkerList.add(worker);
         allWorkerList.add(worker1);
         allWorkerList.add(worker2);
@@ -42,8 +43,7 @@ public class DataBase {
         allProjectList.add(project3);
         allProjectList.add(project4);
         allProjectList.add(project5);
-
-
     }
+
 }
 

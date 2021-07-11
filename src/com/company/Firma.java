@@ -139,4 +139,14 @@ public class Firma {
             System.out.println("Masz " + listaGotowychProjektow.size() +" projekt do oddania!");
         }
     }
+
+    public boolean checkIfLose()
+    {
+        if(cash < 0)
+        {
+         return true;
+        }else{
+            return false;
+        }
+    }
 }
